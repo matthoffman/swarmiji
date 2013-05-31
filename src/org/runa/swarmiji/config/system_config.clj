@@ -3,7 +3,17 @@
 (def ^{:dynamic true} *swarmiji-env* (or (.get (System/getenv) "SWARMIJI_ENV") "test"))
 (def swarmiji-home (or (.get (System/getenv) "SWARMIJI_HOME") (str (System/getProperty "user.home") "/workspace/swarmiji")))
 
-(def ^:dynamic *swarmiji-conf* {})
+(def ^:dynamic *swarmiji-conf*
+  {:operation-configs {
+                        :host "127.0.0.1"
+                        :q-username "guest"
+                        :q-password "guest"
+                        :distributed-mode true
+                        :rabbit-prefetch-count 1
+                        :rabbit-max-pool-size 10
+                        :rabbit-max-idle-size 10
+                        :medusa-server-thread-count 5
+                        }})
 
 (defn set-config [config-map]
   (def ^:dynamic *swarmiji-conf* config-map))
@@ -68,18 +78,16 @@
   ((operation-config) :rabbit-prefetch-count))
 
 (defn rabbitmq-max-pool-size []
-  (or ((operation-config) :rabbit-max-pool-size)
-      10))
+  ((operation-config) :rabbit-max-pool-size))
 
 (defn rabbitmq-max-idle-size []
-  (or ((operation-config) :rabbit-max-idle-size)
-      10))
+  ((operation-config) :rabbit-max-idle-size))
 
 (defn medusa-server-thread-count []
   ((operation-config) :medusa-server-thread-count))
 
-(defn medusa-client-thread-count []
-  ((operation-config) :medusa-client-thread-count))
+;(defn medusa-client-thread-count []
+;  ((operation-config) :medusa-client-thread-count))
 
 (defn should-reload-namespaces? []
   ((operation-config) :reload-namespaces))
