@@ -132,7 +132,7 @@
 (defn boot-sevak-server []
   (log-message "Starting sevaks in" *swarmiji-env* "mode")
   (log-message "System config:" (operation-config))
-  (log-message "Medusa client threads:" (medusa-client-thread-count))
+;  (log-message "Medusa client threads:" (medusa-client-thread-count))
   (log-message "RabbitMQ prefetch-count:" (rabbitmq-prefetch-count))
   (log-message "Sevaks are offering the following" (count @sevaks) "services:" (keys @sevaks))
   (init-rabbit)
